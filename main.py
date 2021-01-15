@@ -20,7 +20,6 @@ is_buy_ringX = 0
 
 while(1) :
 
-    
     # 원화 자산 조회
     krw = bithumb.get_balance("BTC")[2]
     print("현재 잔고는", int(krw), "원입니다.\n")
@@ -78,7 +77,7 @@ while(1) :
         is_buy_con=0
 
     if(is_buy_lamba==1) :
-        bithumb.sell_limit_order("LAMB", 12.72 , bithumb.get_balance("LAMB")[0])
+        bithumb.sell_limit_order("LAMB", 17.43 , bithumb.get_balance("LAMB")[0])
         is_buy_lamba=0
 
     if(is_buy_eforce==1) :
@@ -92,7 +91,6 @@ while(1) :
     if(is_buy_ringX==1) :
         bithumb.sell_limit_order("RINGX", 33.83 , bithumb.get_balance("SOC")[0])
         is_buy_ringX=0
-
     
 
     print("\n===================================\n")
