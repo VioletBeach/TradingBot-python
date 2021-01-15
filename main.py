@@ -17,6 +17,7 @@ buy_lamba_price=16.62
 buy_eforce_price=1326
 buy_queenB_price=5.102
 buy_ringX_price=32.22
+buy_proton_price=4.233
 
 
 # 코인별 구매 여부 - 매수한 후에 판매하기 위해서
@@ -26,6 +27,7 @@ is_buy_lamba = 0
 is_buy_eforce = 0
 is_buy_queenB = 0
 is_buy_ringX = 0
+is_buy_proton = 0
 
 # 수익률
 yeild = 105/100
@@ -79,6 +81,13 @@ while(1) :
             bithumb.buy_market_order("RINGX", (krw/ringX_price)*0.25)
             is_buy_ringX=1
 
+    proton_price = pybithumb.get_current_price("XPR")
+    print("프로톤의 현재 가격 : ", proton_price)
+    if proton_price is not None:
+        if(proton_price<=buy_proton_price) :
+            bithumb.buy_market_order("XPR", (krw/proton_price)*0.25)
+            is_buy_proton=1
+
     # 매수한 코인들 모두 지정가 매수
     if(is_buy_soda==1) :
         bithumb.sell_limit_order("SOC", round(buy_soda_price*yeild,2) , bithumb.get_balance("SOC")[0]-bithumb.get_balance("SOC")[1])
@@ -101,8 +110,12 @@ while(1) :
         is_buy_queenB=0
 
     if(is_buy_ringX==1) :
-        bithumb.sell_limit_order("RINGX", round(buy_ringX_price*yeild,2) , bithumb.get_balance("SOC")[0]-bithumb.get_balance("SOC")[1])
+        bithumb.sell_limit_order("RINGX", round(buy_ringX_price*yeild,2) , bithumb.get_balance("RINGX")[0]-bithumb.get_balance("RINGX")[1])
         is_buy_ringX=0
+
+    if(is_buy_proton==1) :
+        bithumb.sell_limit_order("XPR", round(buy_proton_price*yeild,3) , bithumb.get_balance("XPR")[0]-bithumb.get_balance("XPR")[1])
+        is_buy_proton=0
     
 
     print("\n===================================\n")
