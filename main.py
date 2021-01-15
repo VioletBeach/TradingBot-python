@@ -69,27 +69,27 @@ while(1) :
 
     # 매수한 코인들 모두 지정가 매수
     if(is_buy_soda==1) :
-        bithumb.sell_limit_order("SOC", 12.72 , bithumb.get_balance("SOC")[0])
+        bithumb.sell_limit_order("SOC", 12.72 , bithumb.get_balance("SOC")[0]-bithumb.get_balance("SOC")[1])
         is_buy_soda=0
 
     if(is_buy_con==1) :
-        bithumb.sell_limit_order("CON", 4.114 , bithumb.get_balance("CON")[0])
+        bithumb.sell_limit_order("CON", 4.114 , bithumb.get_balance("CON")[0]-bithumb.get_balance("CON")[1])
         is_buy_con=0
 
     if(is_buy_lamba==1) :
-        bithumb.sell_limit_order("LAMB", 17.43 , bithumb.get_balance("LAMB")[0])
+        bithumb.sell_limit_order("LAMB", 17.43 , bithumb.get_balance("LAMB")[0]-bithumb.get_balance("LAMB")[1])
         is_buy_lamba=0
 
     if(is_buy_eforce==1) :
-        bithumb.sell_limit_order("WOZX", 1392 , bithumb.get_balance("WOZX")[0])
+        bithumb.sell_limit_order("WOZX", 1392 , bithumb.get_balance("WOZX")[0]-bithumb.get_balance("WOZX")[1])
         is_buy_eforce=0
 
     if(is_buy_queenB==1) :
-        bithumb.sell_limit_order("QBZ", 5.357 , bithumb.get_balance("QBZ")[0])
+        bithumb.sell_limit_order("QBZ", 5.357 , bithumb.get_balance("QBZ")[0]-bithumb.get_balance("QBZ")[1])
         is_buy_queenB=0
 
     if(is_buy_ringX==1) :
-        bithumb.sell_limit_order("RINGX", 33.83 , bithumb.get_balance("SOC")[0])
+        bithumb.sell_limit_order("RINGX", 33.83 , bithumb.get_balance("SOC")[0]-bithumb.get_balance("SOC")[1])
         is_buy_ringX=0
     
 
