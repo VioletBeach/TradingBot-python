@@ -38,14 +38,21 @@ order_queenB = 0
 order_ringX = 0
 order_proton = 0
 
+# 매매 9회마다 잔고 조회는 한 번만 하기 위한 변수 (API 호출 최소화)
+count_lookup_balance=0
 
 # 수익률
 yeild = 105/100
 while(1) :
     
     # 원화 자산 조회
-    krw = bithumb.get_balance("BTC")[2]
-    print("현재 잔고는", int(krw), "원입니다.\n")
+    if(count_lookup_balance==10) :
+        krw = bithumb.get_balance("BTC")[2]
+        print("현재 잔고는", int(krw), "원입니다.\n")
+        print("현재 잔고는", int(krw), "원입니다.\n")
+        print("===================================\n")
+        count_lookup_balance=-1
+    count_lookup_balance+=1
 
     # 호가 불러오기
     all = pybithumb.get_orderbook("ALL")
