@@ -18,7 +18,27 @@ buy_eforce_price=1326
 buy_queenB_price=5.102
 buy_ringX_price=32.22
 buy_proton_price=4.233
+buy_vsys_price=14.11
+buy_gom2_price=10.48
+buy_ae_price=102.6
+buy_cennz_price=28.29
+buy_mbl_price=1.471
 
+"""
+소다코인 : 12.05
+코넌 : 3.915
+람바 : 13.62
+이포스 : 1326
+퀸비 : 5.102
+링엑스 : 32.22
+프로톤 4.233
+브이시스템즈 : 14.11
+고머니2 : 10.48
+애터니티 : 102.6
+센트럴리티 : 28.29
+무비블록 : 1.471
+
+"""
 
 # 코인별 구매 여부 - 매수한 후에 판매하기 위해서
 is_buy_soda = 0
@@ -28,6 +48,11 @@ is_buy_eforce = 0
 is_buy_queenB = 0
 is_buy_ringX = 0
 is_buy_proton = 0
+is_buy_ae = 0
+is_buy_cennz = 0
+is_buy_vsys = 0
+is_buy_mbl = 0
+is_buy_gom2 = 0
 
 # 코인별 주문 변수 - 주문 존재 여부를 확인하기 위해서
 order_soda = 0
@@ -37,6 +62,11 @@ order_eforce = 0
 order_queenB = 0
 order_ringX = 0
 order_proton = 0
+order_ae = 0
+order_cennz = 0
+order_vsys = 0
+order_mbl = 0
+order_gom2 = 0
 
 # 매매 9회마다 잔고 조회는 한 번만 하기 위한 변수 (API 호출 최소화)
 count_lookup_balance=0
@@ -58,7 +88,7 @@ while(1) :
     all = pybithumb.get_orderbook("ALL")
 
     # 저점 달성시 매수 [저점을 변수로 설정할까 고민중]
-    soda_price = float(all['data']['SOC']['asks'][0]['price'])
+    soda_price = float(all['data']['SOC']['bids'][0]['price'])
     if soda_price is not None:
         print("소다코인의 현재 가격 : ", soda_price)
         if(order_soda==0 and soda_price<=buy_soda_price*1.015) :
@@ -68,7 +98,7 @@ while(1) :
             bithumb.cancel_order(order_soda)
             order_soda=0
         
-    con_price = float(all['data']['CON']['asks'][0]['price'])
+    con_price = float(all['data']['CON']['bids'][0]['price'])
     print("코넌의 현재 가격 : ", con_price)
     if con_price is not None:
         if(order_con==0 and con_price<=buy_con_price*1.015) :
@@ -78,7 +108,7 @@ while(1) :
             bithumb.cancel_order(order_con)
             order_con=0
 
-    lamba_price = float(all['data']['LAMB']['asks'][0]['price'])
+    lamba_price = float(all['data']['LAMB']['bids'][0]['price'])
     print("람바의 현재 가격 : ", lamba_price)
     if lamba_price is not None:
         if(order_lamba==0 and lamba_price<=buy_lamba_price*1.015) :
@@ -88,7 +118,7 @@ while(1) :
             bithumb.cancel_order(order_lamba)
             order_lamba=0
         
-    eforce_price = float(all['data']['WOZX']['asks'][0]['price'])
+    eforce_price = float(all['data']['WOZX']['bids'][0]['price'])
     print("이포스의 현재 가격 : ", eforce_price)
     if eforce_price is not None:
         if(order_eforce==0 and eforce_price<=buy_eforce_price*1.015) :
@@ -98,7 +128,7 @@ while(1) :
             bithumb.cancel_order(order_eforce)
             order_eforce=0
 
-    queenB_price = float(all['data']['QBZ']['asks'][0]['price'])
+    queenB_price = float(all['data']['QBZ']['bids'][0]['price'])
     print("퀸비의 현재 가격 : ", queenB_price)
     if queenB_price is not None:
         if(order_queenB==0 and queenB_price<=buy_queenB_price*1.015) :
@@ -108,7 +138,7 @@ while(1) :
             bithumb.cancel_order(order_queenB)
             order_queenB=0
         
-    ringX_price = float(all['data']['RINGX']['asks'][0]['price'])
+    ringX_price = float(all['data']['RINGX']['bids'][0]['price'])
     print("링엑스의 현재 가격 : ", ringX_price)
     if ringX_price is not None:
         if(order_ringX==0 and ringX_price<=buy_ringX_price*1.015) :
@@ -118,7 +148,7 @@ while(1) :
             bithumb.cancel_order(order_ringX)
             order_ringX=0
 
-    proton_price = float(all['data']['XPR']['asks'][0]['price'])
+    proton_price = float(all['data']['XPR']['bids'][0]['price'])
     print("프로톤의 현재 가격 : ", proton_price)
     if proton_price is not None:
         if(order_proton==0 and proton_price<=buy_proton_price*1.015) :
@@ -127,6 +157,56 @@ while(1) :
         if(order_proton!=0 and proton_price>=buy_proton_price*1.035) :
             bithumb.cancel_order(order_proton)
             order_proton=0
+
+    ae_price = float(all['data']['AE']['bids'][0]['price'])
+    print("애터니티의 현재 가격 : ", ae_price)
+    if ae_price is not None:
+        if(order_ae==0 and ae_price<=buy_ae_price*1.015) :
+            bithumb.buy_limit_order("AE", buy_ae_price, (krw/ae_price)*0.5)
+            is_buy_ae=1
+        if(order_ae!=0 and ae_price>=buy_ae_price*1.035) :
+            bithumb.cancel_order(order_ae)
+            order_ae=0
+            
+    gom2_price = float(all['data']['GOM2']['bids'][0]['price'])
+    print("고머니2의 현재 가격 : ", gom2_price)
+    if gom2_price is not None:
+        if(order_gom2==0 and gom2_price<=buy_gom2_price*1.015) :
+            bithumb.buy_limit_order("GOM2", buy_gom2_price, (krw/gom2_price)*0.5)
+            is_buy_gom2=1
+        if(order_gom2!=0 and gom2_price>=buy_gom2_price*1.035) :
+            bithumb.cancel_order(order_gom2)
+            order_gom2=0
+
+    vsys_price = float(all['data']['VSYS']['bids'][0]['price'])
+    print("브이시스템즈의 현재 가격 : ", vsys_price)
+    if vsys_price is not None:
+        if(order_vsys==0 and vsys_price<=buy_vsys_price*1.015) :
+            bithumb.buy_limit_order("VSYS", buy_vsys_price, (krw/vsys_price)*0.5)
+            is_buy_vsys=1
+        if(order_vsys!=0 and vsys_price>=buy_vsys_price*1.035) :
+            bithumb.cancel_order(order_vsys)
+            order_vsys=0
+            
+    cennz_price = float(all['data']['CENNZ']['bids'][0]['price'])
+    print("센트럴리티의 현재 가격 : ", cennz_price)
+    if cennz_price is not None:
+        if(order_cennz==0 and cennz_price<=buy_cennz_price*1.015) :
+            bithumb.buy_limit_order("CENNZ", buy_cennz_price, (krw/cennz_price)*0.5)
+            is_buy_cennz=1
+        if(order_cennz!=0 and cennz_price>=buy_cennz_price*1.035) :
+            bithumb.cancel_order(order_cennz)
+            order_cennz=0
+
+    mbl_price = float(all['data']['MBL']['bids'][0]['price'])
+    print("무비블록의 현재 가격 : ", mbl_price)
+    if mbl_price is not None:
+        if(order_mbl==0 and mbl_price<=buy_mbl_price*1.015) :
+            bithumb.buy_limit_order("MBL", buy_mbl_price, (krw/mbl_price)*0.5)
+            is_buy_mbl=1
+        if(order_mbl!=0 and mbl_price>=buy_mbl_price*1.035) :
+            bithumb.cancel_order(order_mbl)
+            order_mbl=0
 
     # 매수한 코인들 모두 지정가 매수
     if(is_buy_soda==1) :
@@ -156,7 +236,26 @@ while(1) :
     if(is_buy_proton==1) :
         bithumb.sell_limit_order("XPR", round(buy_proton_price*yeild,3) , bithumb.get_balance("XPR")[0]-bithumb.get_balance("XPR")[1])
         is_buy_proton=0
-    
+
+    if(is_buy_ae==1) :
+        bithumb.sell_limit_order("AE", round(buy_ae_price*yeild,1) , bithumb.get_balance("AE")[0]-bithumb.get_balance("AE")[1])
+        is_buy_ae=0
+
+    if(is_buy_gom2==1) :
+        bithumb.sell_limit_order("GOM2", round(buy_gom2_price*yeild,2) , bithumb.get_balance("GOM2")[0]-bithumb.get_balance("GOM2")[1])
+        is_buy_gom2=0
+
+    if(is_buy_vsys==1) :
+        bithumb.sell_limit_order("VSYS", round(buy_vsys_price*yeild,3) , bithumb.get_balance("VSYS")[0]-bithumb.get_balance("VSYS")[1])
+        is_buy_vsys=0
+
+    if(is_buy_cennz==1) :
+        bithumb.sell_limit_order("CENNZ", round(buy_cennz_price*yeild,2) , bithumb.get_balance("CENNZ")[0]-bithumb.get_balance("CENNZ")[1])
+        is_buy_cennz=0
+
+    if(is_buy_mbl==1) :
+        bithumb.sell_limit_order("MBL", round(buy_mbl_price*yeild,3) , bithumb.get_balance("MBL")[0]-bithumb.get_balance("MBL")[1])
+        is_buy_mbl=0
 
     print("\n===================================\n")
 
